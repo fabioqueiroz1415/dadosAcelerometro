@@ -3,63 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Números Aleatórios</title>
+    <title>Dados do Acelerômetro</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.3/socket.io.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f0f0f0;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            height: 100vh;
-            margin: 0;
+            padding: 20px;
         }
-        .container {
+        .data-container {
             background-color: #fff;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            margin-top: 10px;
-        }
-        ul {
-            list-style: none;
-            padding: 0;
-        }
-        li {
-            background-color: #f9f9f9;
-            padding: 8px;
-            margin-bottom: 5px;
-            border-radius: 4px;
+        .data-item {
+            margin: 10px 0;
+            font-size: 18px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Números Aleatórios</h1>
-        <button onclick="generateRandomNumbers()">Gerar Números</button>
-        <ul id="randomNumbersList"></ul>
+    <h1>Dados do Acelerômetro</h1>
+    <div class="data-container">
+        <div class="data-item" id="x-axis">X: 0.0</div>
+        <div class="data-item" id="y-axis">Y: 0.0</div>
+        <div class="data-item" id="z-axis">Z: 0.0</div>
     </div>
 
     <script>
-        function generateRandomNumbers() {
-            const listElement = document.getElementById('randomNumbersList');
-            listElement.innerHTML = ''; // Limpa a lista existente
+        document.addEventListener('DOMContentLoaded', function () {
+            // Conectar ao servidor Socket.IO
+            const socket = io();
 
-            const size = 10; // Define o tamanho do vetor
-            const lowerBound = 1; // Define o valor mínimo
-            const upperBound = 100; // Define o valor máximo
-
-            for (let i = 0; i < size; i++) {
-                const randomNumber = Math.floor(Math.random() * (upperBound - lowerBound + 1)) + lowerBound;
-                const listItem = document.createElement('li');
-                listItem.textContent = randomNumber;
-                listElement.appendChild(listItem);
-            }
-        }
+            // Escutar o evento 'accelerometer_data' enviado pelo servidor
+            socket.on('accelerometer_data', function (data) {
+                // Atualizar os valores exibidos na página
+                document.getElementById('x-axis').textContent = `X: ${data.x.toFixed(2)}`;
+                document.getElementById('y-axis').textContent = `Y: ${data.y.toFixed(2)}`;
+                document.getElementById('z-axis').textContent = `Z: ${data.z.toFixed(2)}`;
+            });
+        });
     </script>
 </body>
 </html>
