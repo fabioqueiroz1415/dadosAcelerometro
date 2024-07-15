@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Números Aleatórios</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            background-color: #f9f9f9;
+            padding: 8px;
+            margin-bottom: 5px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Números Aleatórios</h1>
+        <button onclick="generateRandomNumbers()">Gerar Números</button>
+        <ul id="randomNumbersList"></ul>
+    </div>
+
+    <script>
+        function generateRandomNumbers() {
+            const listElement = document.getElementById('randomNumbersList');
+            listElement.innerHTML = ''; // Limpa a lista existente
+
+            const size = 10; // Define o tamanho do vetor
+            const lowerBound = 1; // Define o valor mínimo
+            const upperBound = 100; // Define o valor máximo
+
+            for (let i = 0; i < size; i++) {
+                const randomNumber = Math.floor(Math.random() * (upperBound - lowerBound + 1)) + lowerBound;
+                const listItem = document.createElement('li');
+                listItem.textContent = randomNumber;
+                listElement.appendChild(listItem);
+            }
+        }
+    </script>
+</body>
+</html>
