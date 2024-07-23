@@ -39,7 +39,7 @@
             // Conectar ao servidor Socket.IO
             const socket = io("https://dados-acelerometro.vercel.app/");
 
-            
+            console.log("saaaaa");
             socket.on('new_data', function (data) {
                 // Atualizar os valores exibidos na página
                 document.getElementById('x-axis').textContent = `X: ${data.x.toFixed(2)}`;
