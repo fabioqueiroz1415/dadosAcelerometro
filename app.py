@@ -6,8 +6,6 @@ app = Flask(__name__)
 app.config['JSON_SORT_KEYS'] = False
 socketio = SocketIO(app)
 
-MAX_TIME = 300
-
 data_point = []
 
 @app.route("/data", methods=['POST'])
@@ -37,4 +35,4 @@ def handle_connect():
     emit('new_data', data_point)
 
 if __name__ == '__main__':
-    socketio.run(app, debug=True, host='0.0.0.0', port=5000)
+    socketio.run(app, debug=True, host='0.0.0.0')
