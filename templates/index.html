@@ -39,8 +39,8 @@
             // Conectar ao servidor Socket.IO
             const socket = io();
 
-            // Escutar o evento 'accelerometer_data' enviado pelo servidor
-            socket.on('accelerometer_data', function (data) {
+            
+            socket.on('new_data', function (data) {
                 // Atualizar os valores exibidos na página
                 document.getElementById('x-axis').textContent = `X: ${data.x.toFixed(2)}`;
                 document.getElementById('y-axis').textContent = `Y: ${data.y.toFixed(2)}`;
