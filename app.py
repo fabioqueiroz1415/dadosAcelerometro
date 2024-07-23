@@ -24,7 +24,7 @@ def receive_data():
         }
 
         socketio.emit('new_data', data_point)
-        return jsonify(message="Dados recebidos com sucesso"), 200
+        return jsonify(message="Dados recebidos com sucesso!!!"), 200
     except Exception as e:
         return make_response(jsonify({"error": str(e)}), 400)
 
@@ -34,7 +34,7 @@ def index():
 
 @socketio.on('connect')
 def handle_connect():
-    emit('accelerometer_data', data_point)
+    emit('new_data', data_point)
 
 if __name__ == '__main__':
     socketio.run(app, debug=True, host='0.0.0.0', port=5000)
