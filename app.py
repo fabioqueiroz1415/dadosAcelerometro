@@ -5,7 +5,7 @@ app = Flask(__name__)
 app.config['JSON_SORT_KEYS'] = False
 socketio = SocketIO(app)
 
-data_point = ['x' : 0.0, 'y' : 0.0, 'z' : 0.0]
+data_point = {'x' : 0, 'y' : 0, 'z' : 0}
 
 @app.route("/data", methods=['POST'])
 def receive_data():
