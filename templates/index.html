@@ -40,11 +40,11 @@
             const socket = io.connect("https://dados-acelerometro.vercel.app");
 
             socket.on('new_data', function (data) {
-                console.log(data);
+                console.log("ENTROU AQUIIII");
                 // Atualizar os valores exibidos na página
-                document.getElementById('x-axis').textContent = `X: ${data.x.toFixed(2)}`;
-                document.getElementById('y-axis').textContent = `Y: ${data.y.toFixed(2)}`;
-                document.getElementById('z-axis').textContent = `Z: ${data.z.toFixed(2)}`;
+                //document.getElementById('x-axis').textContent = `X: ${data.x.toFixed(2)}`;
+                //document.getElementById('y-axis').textContent = `Y: ${data.y.toFixed(2)}`;
+                //document.getElementById('z-axis').textContent = `Z: ${data.z.toFixed(2)}`;
             });
         });
     </script>
