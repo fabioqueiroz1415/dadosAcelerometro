@@ -1,6 +1,5 @@
 from flask import Flask, request, jsonify, make_response, render_template
 from flask_socketio import SocketIO, emit
-from datetime import datetime, timedelta
 
 app = Flask(__name__)
 app.config['JSON_SORT_KEYS'] = False
@@ -22,7 +21,7 @@ def receive_data():
         }
 
         socketio.emit('new_data', data_point)
-        return jsonify(message="Dados recebidos com sucesso!!!"), 200
+        return jsonify(message=f"Dados recebidos com sucesso!"), 200
     except Exception as e:
         return make_response(jsonify({"error": str(e)}), 400)
 
@@ -35,4 +34,4 @@ def handle_connect():
     emit('new_data', data_point)
 
 if __name__ == '__main__':
-    socketio.run(app, debug=True, host='0.0.0.0')
+    socketio.run(app, debug=True)

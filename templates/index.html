@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dados do Acelerômetro</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.3/socket.io.min.js"></script>
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -34,10 +34,10 @@
         <div class="data-item" id="z-axis">Z: 0.0</div>
     </div>
 
-    <script>
+    <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function () {
-            // Conectar ao servidor Socket.IO
-            const socket = io("https://dados-acelerometro.vercel.app/");
+            
+            const socket = io.connect("http://" + document.domain + ":" + location.port);
 
             socket.on('new_data', function (data) {
                 // Atualizar os valores exibidos na página
