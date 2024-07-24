@@ -21,7 +21,7 @@ def receive_data():
         }
 
         socketio.emit('new_data', data_point)
-        return jsonify(message=f"Dados recebidos com sucesso!"), 200
+        return jsonify(message=f"Dados recebidos com sucesso! {data_point['x']}"), 200
     except Exception as e:
         return make_response(jsonify({"error": str(e)}), 400)
 
