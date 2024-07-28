@@ -1,17 +1,21 @@
 from flask import Flask, request, jsonify, make_response, render_template
 from flask_socketio import SocketIO, emit
+from flask_cors import CORS
 
 app = Flask(__name__)
-app.config['JSON_SORT_KEYS'] = False
-socketio = SocketIO(app)
+CORS(app, resources={r"/*": {"origins": "*"}})
 
-data_point = {'x' : 0.0, 'y' : 0.0, 'z' : 0.0}
+app.config['JSON_SORT_KEYS'] = False
+socketio = SocketIO(app, cors_allowed_origins="*")
+
+data_point = {'x': 0.0, 'y': 0.0, 'z': 0.0}
 
 @app.route("/data", methods=['POST'])
 def receive_data():
+    global data_point
     try:
         data = request.get_json()
-        if ('x' not in data) or ('y' not in data) or ('z' not in data):
+        if 'x' not in data or 'y' not in data or 'z' not in data:
             raise ValueError("O JSON deve conter os campos 'x', 'y', e 'z'")
 
         data_point = {
@@ -21,6 +25,7 @@ def receive_data():
         }
 
         socketio.emit('new_data', data_point)
+        print(data_point)
         return jsonify(message="Dados recebidos com sucesso!"), 200
     except Exception as e:
         return make_response(jsonify({"error": str(e)}), 400)

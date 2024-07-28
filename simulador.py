@@ -13,7 +13,8 @@ data = {
 
 # Cabeçalhos para a requisição
 headers = {
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    'Origin': 'https://fabioqueiroz1415.pythonanywhere.com'
 }
 
 # Enviar a requisição POST
