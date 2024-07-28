@@ -2,7 +2,7 @@ import requests
 import json
 
 # URL do servidor Flask
-url = 'https://dados-acelerometro.vercel.app/data'  # Altere para a URL do seu servidor na Vercel quando necessário
+url = 'https://fabioqueiroz1415.pythonanywhere.com/data'  # Altere para a URL do seu servidor na Vercel quando necessário
 
 # Dados a serem enviados no POST
 data = {

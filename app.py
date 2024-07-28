@@ -5,7 +5,7 @@ app = Flask(__name__)
 app.config['JSON_SORT_KEYS'] = False
 socketio = SocketIO(app)
 
-data_point = {'x' : 0, 'y' : 0, 'z' : 0}
+data_point = {'x' : 0.0, 'y' : 0.0, 'z' : 0.0}
 
 @app.route("/data", methods=['POST'])
 def receive_data():
@@ -21,17 +21,13 @@ def receive_data():
         }
 
         socketio.emit('new_data', data_point)
-        return jsonify(message=f"Dados recebidos com sucesso! {data_point['x']}"), 200
+        return jsonify(message="Dados recebidos com sucesso!"), 200
     except Exception as e:
         return make_response(jsonify({"error": str(e)}), 400)
 
 @app.route('/')
 def index():
     return render_template('index.html')
-
-@socketio.on('connect')
-def handle_connect():
-    emit('new_data', data_point)
 
 if __name__ == '__main__':
     socketio.run(app, debug=True)
