@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Armazenar dados</title>
+</head>
+<body>
+    <h1 id="titulo">Armazenar dados</h1>
+    <div>
+        <button id="armazenar">Armazenar</button>
+        <button id="parar">Parar de Armazenar</button>
+        <button id="download" disabled>Download JSON</button>
+    </div>
+
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('/isSalvar')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.isSalvar === 1) {
+                        document.getElementById('titulo').textContent = "Gravando...";
+                        document.getElementById('download').disabled = true;
+                    } else {
+                        document.getElementById('titulo').textContent = "Armazenar dados";
+                        document.getElementById('download').disabled = false;
+                    }
+                })
+                .catch(error => console.error('Erro ao buscar o estado de isSalvar:', error));
+        });
+
+        document.getElementById('armazenar').addEventListener('click', armazenarDados);
+        document.getElementById('parar').addEventListener('click', pararGravacao);
+        document.getElementById('download').addEventListener('click', download);
+
+        function armazenarDados() {
+            document.getElementById('titulo').textContent = "Gravando...";
+            document.getElementById('download').disabled = true;
+
+            // Enviar valor 1 via POST
+            fetch('/isSalvar', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ 'isSalvar': 1 })
+            }).then(response => {
+                if (response.ok) {
+                    console.log('Valor 1 enviado com sucesso.');
+                } else {
+                    console.error('Erro ao enviar valor 1.');
+                }
+            });
+        }
+
+        function pararGravacao() {
+            document.getElementById('titulo').textContent = "Armazenar dados";
+            document.getElementById('download').disabled = false;
+
+            fetch('/isSalvar', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ 'isSalvar': 0 })
+            }).then(response => {
+                if (response.ok) {
+                    console.log('Valor 0 enviado com sucesso.');
+                } else {
+                    console.error('Erro ao enviar valor 0.');
+                }
+            });
+        }
+
+        function download() {
+            fetch('/dado/armazenados')
+                .then(response => response.json())
+                .then(data => {
+                    const blob = new Blob(
+                        [JSON.stringify(data, null, 2)],
+                        { type: 'application/json' }
+                    );
+                    const url = URL.createObjectURL(blob); // cria url aleatória
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'dados_armazenados.json';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url); // Libera o URL criado
+                })
+                .catch(error => console.error('Erro ao buscar dados para download:', error));
+        }
+    </script>
+</body>
+</html>

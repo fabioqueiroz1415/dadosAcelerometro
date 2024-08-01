@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dados do Acelerômetro</title>
+    <script></script>
+</head>
+<body>
+    <h1>Dados do Acelerômetro</h1>
+    <div>
+        <div id="x-axis">X: </div>
+        <div id="y-axis">Y: </div>
+        <div id="z-axis">Z: </div>
+    </div>
+
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            function atualizaDados() {
+                fetch("/dado")
+                .then(response => {
+                    if(response.status == 200) {
+                        return response.json()
+                        .then(data => {
+                            document.getElementById('x-axis').textContent = `X: ${data.x}`;
+                            document.getElementById('y-axis').textContent = `Y: ${data.y}`;
+                            document.getElementById('z-axis').textContent = `Z: ${data.z}`;
+                        });
+                    }
+                    else {
+                        return response.json()
+                        .then(error => {
+                            throw new Error("Erro ao obter os dados: " + error.error);
+                        });
+                    }
+                })
+            }
+            setInterval(atualizaDados, 200);
+        });
+    </script>
+</body>
+</html>
