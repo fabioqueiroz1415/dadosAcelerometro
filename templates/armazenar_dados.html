@@ -73,24 +73,14 @@
         }
 
         function download() {
-            fetch('/dado/armazenados')
-                .then(response => response.json())
-                .then(data => {
-                    const blob = new Blob(
-                        [JSON.stringify(data, null, 2)],
-                        { type: 'application/json' }
-                    );
-                    const url = URL.createObjectURL(blob); // cria url aleatória
-                    const a = document.createElement('a');
-                    a.href = url;
-                    a.download = 'dados_armazenados.json';
-                    document.body.appendChild(a);
-                    a.click();
-                    document.body.removeChild(a);
-                    URL.revokeObjectURL(url); // Libera o URL criado
-                })
-                .catch(error => console.error('Erro ao buscar dados para download:', error));
+            const url = 'dado/armazenar/download';
+            const a = document.createElement('a');
+            a.href = url;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
         }
+        
     </script>
 </body>
 </html>

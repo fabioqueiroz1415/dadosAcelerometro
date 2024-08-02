@@ -41,11 +41,22 @@ def dados():
 def armazenar_dados():
     return render_template('armazenar_dados.html')
 
+@app.route('/dado/armazenar/download')
+def download_dados_armazenados():
+    try:
+        response = make_response(json.dumps(acelerometros, indent=2), 200)
+        response.headers['Content-Type'] = 'application/json'
+        response.headers['Content-Disposition'] = f'attachment; filename="{contador_id} dados_armazenados.json"' #cabeçalho para download
+        return response
+    except Exception as e:
+        return make_response(jsonify({"error": str(e)}), 400)
+
 @app.route('/dado/armazenados')
 def dados_armazenados():
     try:
-        response_data = json.dumps(acelerometros, indent=2)
-        return make_response(response_data, 200, {'Content-Type': 'application/json'})
+        response = make_response(json.dumps(acelerometros, indent=2), 200)
+        response.headers['Content-Type'] = 'application/json'
+        return response
     except Exception as e:
         return make_response(jsonify({"error": str(e)}), 400)
 
